@@ -15,3 +15,17 @@ Given the Path Instructions above, programmatically parse the instructions and d
 - Provide any needed instructions to run program.
 - Do not round to the nearest step.
 - After program executes the answer should be returned.
+
+## Instructions for Program Execution
+You must have Python 3.10 or higher to run the program. You can find links to install at [https://www.python.org/downloads/.](https://www.python.org/downloads/) It shouldn't need additional libraries to be installed.
+
+You can use the program in two ways. Both ways will print the Euclidian distance to the command line, or an error message.
+- Calling just challenge.py will read the directions from Adventurer Path.md assuming both files are in the same directory.
+```
+python3 challenge.py
+```
+- Calling challenge.py with -s or --string allows you to manually specify the directions as an argument
+```
+python3 challenge.py -s <distance string, no quotations>
+```
+- Calling challenge.py with -h shows help text.
