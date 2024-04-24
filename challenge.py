@@ -1,6 +1,7 @@
 from typing import NamedTuple
 import sys
 import argparse
+import math
 
 DIRECTION_FILE: str = "Adventurer Path.md"
 
@@ -23,6 +24,12 @@ class Vector(NamedTuple):
         """
         if isinstance(other_vector, Vector):
             return Vector(self.x + other_vector.x, self.y + other_vector.y)
+    
+    def magnitude(self):
+        """
+        Determines the magnitude of the vector.
+        """
+        return math.sqrt((self.x ** 2) + (self.y ** 2))
 
 def get_directions() -> str:
     """
