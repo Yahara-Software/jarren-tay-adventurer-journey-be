@@ -16,6 +16,13 @@ class Vector(NamedTuple):
     def __init(self, x_coordinate, y_coordinate):
         self.x = x_coordinate
         self.y = y_coordinate
+    
+    def __add__(self, other_vector):
+        """
+        Add two vectors together.
+        """
+        if isinstance(other_vector, Vector):
+            return Vector(self.x + other_vector.x, self.y + other_vector.y)
 
 def get_directions() -> str:
     """
@@ -83,7 +90,10 @@ def calculate_final_coordinate(vector_list: list) -> Vector:
         vector_list:    A list of Vectors
     Returns: A Vector containing the final coordinate
     """
-    return Vector(0, 0)
+    final_vector: Vector = Vector(0, 0)
+    for direction_vector in vector_list:
+        final_vector = final_vector + direction_vector
+    return final_vector
 
 def calculate_distance(coordinate: Vector) -> float:
     """
@@ -107,7 +117,7 @@ def main() -> int:
     directions: str = get_directions()
     if directions == '':
         return_status = Codes.NO_DIRECTIONS
-        print("Could not read from file or test case")
+        print("Could not read from file or test case.")
         return return_status
 
     vector_list: list = []
