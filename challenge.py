@@ -2,6 +2,7 @@ from typing import NamedTuple
 import sys
 import argparse
 import math
+import os
 
 DIRECTION_FILE: str = "Adventurer Path.md"
 
@@ -53,7 +54,9 @@ def get_directions_from_file() -> str:
     """
     directions: str
     try:
-        with open(DIRECTION_FILE, "r") as raw_direction_file:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(dir_path, DIRECTION_FILE)
+        with open(file_path, "r") as raw_direction_file:
             raw_direction_string: str = raw_direction_file.read()
             begin_directions_index = raw_direction_string.find("`") + 1
             end_directions_index = raw_direction_string.find("`", begin_directions_index)
