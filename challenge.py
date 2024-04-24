@@ -4,6 +4,11 @@ import argparse
 
 DIRECTION_FILE: str = "Adventurer Path.md"
 
+class Codes:
+    SUCCESS: int = 0 
+    NO_DIRECTIONS: int = -1
+    BAD_DIRECTIONS: int = -2
+
 class Vector(NamedTuple):
     x: int
     y: int
@@ -40,16 +45,15 @@ def get_directions_from_file() -> str:
         directions = raw_direction_string[begin_directions_index:end_directions_index]
     return directions
 
-def interpret_directions(direction_string: str) -> list:
+def interpret_directions(direction_string: str, vector_list: list) -> bool:
     """
     From a string of directions, return a list of Vectors.
     Parameters:
         direction_string:   Alternating n num of numeric chars and 1 letter
                             F = forward, B = backward, R = right, L = left
-    Returns: A list of Vectors
+    Returns: 
     """
     good_directions: bool = True
-    directions_list: list = []
     current_direction: str = ''
     vector_magnitude: int = 0
     for next_char in direction_string:
@@ -59,18 +63,18 @@ def interpret_directions(direction_string: str) -> list:
             vector_magnitude = int(current_direction)
             match next_char:
                 case 'F':
-                    directions_list.append(Vector(0, vector_magnitude))
+                    vector_list.append(Vector(0, vector_magnitude))
                 case 'B':
-                    directions_list.append(Vector(0, vector_magnitude * -1))
+                    vector_list.append(Vector(0, vector_magnitude * -1))
                 case 'R':
-                    directions_list.append(Vector(vector_magnitude, 0))
+                    vector_list.append(Vector(vector_magnitude, 0))
                 case 'L':
-                    directions_list.append(Vector(vector_magnitude * -1, 0))
+                    vector_list.append(Vector(vector_magnitude * -1, 0))
                 case _  :
                     good_directions = False
             current_direction = ''
-    
-    return directions_list
+
+    return good_directions
 
 def calculate_final_coordinate(vector_list: list) -> Vector:
     """
@@ -98,16 +102,25 @@ def main() -> int:
             -1: Could not get directions
             -2: Bad directions
     """
-    return_status: int = 0
+    return_status: int = Codes.SUCCESS
     
     directions: str = get_directions()
     if directions == '':
-        return_status = -1
+        return_status = Codes.NO_DIRECTIONS
+        print("Could not read from file or test case")
+        return return_status
 
-    vector_list: list = interpret_directions(directions)
+    vector_list: list = []
+    good_directions: bool = interpret_directions(directions, vector_list)
+    if not good_directions:
+        return_status = Codes.BAD_DIRECTIONS
+        print("Directions could not be interpreted.")
+        return return_status
+    
     final_coordinate: Vector = calculate_final_coordinate(vector_list)
     final_distance: float = calculate_distance(final_coordinate)
     print(final_distance)
+
     return return_status
 
 if __name__ == '__main__':
