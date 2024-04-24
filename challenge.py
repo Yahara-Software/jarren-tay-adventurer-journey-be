@@ -37,13 +37,13 @@ def get_directions() -> str:
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
     parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
-    parser.add_argument('-t', '--test', type=str, default='', dest='test_string', help='Specify a test string to use instead of the default file.')
+    parser.add_argument('-s', '--string', type=str, default='', dest='direction_string', help='Specify a string of directions to use instead of using the default file.')
     args = parser.parse_args()
 
-    if args.test_string == '':
+    if args.direction_string == '':
         directions = get_directions_from_file()
     else:
-        directions = args.test_string
+        directions = args.direction_string
     return directions
 
 def get_directions_from_file() -> str:
