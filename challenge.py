@@ -95,6 +95,10 @@ def interpret_directions(direction_string: str, vector_list: list) -> bool:
                 # We received two letters in a row, which means we received a direction with no distance
                 good_directions = False
             current_direction = ''
+    
+    if current_direction != '':
+        # We received a number of steps but no direction and are about to quit
+        good_directions = False
 
     return good_directions
 
