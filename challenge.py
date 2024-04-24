@@ -13,6 +13,10 @@ class Vector(NamedTuple):
         self.y = y_coordinate
 
 def get_directions() -> str:
+    """
+    Get the string of directions from file, or command line argument.
+    Returns: String of directions, alternating n num of numeric chars and 1 letter
+    """
     parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
     parser.add_argument('-t', '--test', type=str, default='', dest='test_string', help='Specify a test string to use instead of the default file.')
     args = parser.parse_args()
@@ -25,7 +29,7 @@ def get_directions() -> str:
 
 def get_directions_from_file() -> str:
     """
-    Get the string of directions from file, or test cases.
+    Get the string of directions from file.
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
     directions: str = ''
