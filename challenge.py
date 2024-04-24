@@ -109,7 +109,7 @@ def calculate_distance(coordinate: Vector) -> float:
         coordinate: the ending coordinate as a Vector
     Returns: The euclidian distance to the coordinate as a Vector
     """
-    return 0
+    return coordinate.magnitude()
 
 def main() -> int:
     """
