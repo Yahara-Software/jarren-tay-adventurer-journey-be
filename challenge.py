@@ -1,6 +1,8 @@
 from typing import NamedTuple
 import sys
 
+DIRECTION_FILE: str = "Adventurer Path.md"
+
 class Vector(NamedTuple):
     x: int
     y: int
@@ -14,7 +16,13 @@ def get_directions() -> str:
     Get the string of directions from file, or test cases.
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
-    return ""
+    directions: str = ""
+    with open(DIRECTION_FILE, "r") as raw_direction_file:
+        raw_direction_string: str = raw_direction_file.read()
+        begin_directions_index = raw_direction_string.find("`") + 1
+        end_directions_index = raw_direction_string.find("`", begin_directions_index)
+        directions = raw_direction_string[begin_directions_index:end_directions_index]
+    return directions
 
 def interpret_directions(direction_string: str) -> list:
     """
