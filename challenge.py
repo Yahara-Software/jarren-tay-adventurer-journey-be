@@ -1,5 +1,6 @@
 from typing import NamedTuple
 import sys
+import argparse
 
 DIRECTION_FILE: str = "Adventurer Path.md"
 
@@ -11,12 +12,12 @@ class Vector(NamedTuple):
         self.x = x_coordinate
         self.y = y_coordinate
 
-def get_directions() -> str:
+def get_directions_from_file() -> str:
     """
     Get the string of directions from file, or test cases.
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
-    directions: str = ""
+    directions: str = ''
     with open(DIRECTION_FILE, "r") as raw_direction_file:
         raw_direction_string: str = raw_direction_file.read()
         begin_directions_index = raw_direction_string.find("`") + 1
@@ -57,15 +58,25 @@ def main() -> int:
     Interpret the directions and prints the Euclidian distance.
     Returns: error status
              0: Success
-            -1: Could not read file
+            -1: Could not get directions
             -2: Bad directions
     """
-    directions: str = get_directions()
+    return_status: int = 0
+    parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
+    parser.add_argument('-t', '--test', type=str, default='', dest='test_string', help='Specify a test string to use instead of the default file.')
+    args = parser.parse_args()
+
+    directions: str = args.test_string
+    if directions == '':
+        directions = get_directions_from_file()
+    if directions == '':
+        return_status = -1
+        
     vector_list: list = interpret_directions(directions)
     final_coordinate: Vector = calculate_final_coordinate(vector_list)
     final_distance: float = calculate_distance(final_coordinate)
     print(final_distance)
-    return 0
+    return return_status
 
 if __name__ == '__main__':
     sys.exit(main())
