@@ -36,7 +36,7 @@ def get_directions() -> str:
     Get the string of directions from file, or command line argument.
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
-    parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
+    parser = argparse.ArgumentParser(description='Gets the adventurer\'s directions and prints the euclidian distance from the destination.')
     parser.add_argument('-s', '--string', type=str, default='', dest='direction_string', help='Specify a string of directions to use instead of using the default file.')
     args = parser.parse_args()
 
