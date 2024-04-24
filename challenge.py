@@ -12,6 +12,17 @@ class Vector(NamedTuple):
         self.x = x_coordinate
         self.y = y_coordinate
 
+def get_directions() -> str:
+    parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
+    parser.add_argument('-t', '--test', type=str, default='', dest='test_string', help='Specify a test string to use instead of the default file.')
+    args = parser.parse_args()
+
+    if args.test_string == '':
+        directions = get_directions_from_file()
+    else:
+        directions = args.test_string
+    return directions
+
 def get_directions_from_file() -> str:
     """
     Get the string of directions from file, or test cases.
@@ -62,16 +73,11 @@ def main() -> int:
             -2: Bad directions
     """
     return_status: int = 0
-    parser = argparse.ArgumentParser(description='Gets the adventurer directions and prints the euclidian distance from the destination')
-    parser.add_argument('-t', '--test', type=str, default='', dest='test_string', help='Specify a test string to use instead of the default file.')
-    args = parser.parse_args()
-
-    directions: str = args.test_string
-    if directions == '':
-        directions = get_directions_from_file()
+    
+    directions: str = get_directions()
     if directions == '':
         return_status = -1
-        
+
     vector_list: list = interpret_directions(directions)
     final_coordinate: Vector = calculate_final_coordinate(vector_list)
     final_distance: float = calculate_distance(final_coordinate)
