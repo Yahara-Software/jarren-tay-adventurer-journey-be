@@ -74,18 +74,23 @@ def interpret_directions(direction_string: str, vector_list: list) -> bool:
         if next_char.isnumeric():
             current_direction = current_direction + next_char
         else:
-            vector_magnitude = int(current_direction)
-            match next_char:
-                case 'F':
-                    vector_list.append(Vector(0, vector_magnitude))
-                case 'B':
-                    vector_list.append(Vector(0, vector_magnitude * -1))
-                case 'R':
-                    vector_list.append(Vector(vector_magnitude, 0))
-                case 'L':
-                    vector_list.append(Vector(vector_magnitude * -1, 0))
-                case _  :
-                    good_directions = False
+            if current_direction != '':
+                vector_magnitude = int(current_direction)
+            
+                match next_char:
+                    case 'F':
+                        vector_list.append(Vector(0, vector_magnitude))
+                    case 'B':
+                        vector_list.append(Vector(0, vector_magnitude * -1))
+                    case 'R':
+                        vector_list.append(Vector(vector_magnitude, 0))
+                    case 'L':
+                        vector_list.append(Vector(vector_magnitude * -1, 0))
+                    case _  :
+                        good_directions = False
+            else:
+                # We received two letters in a row, which means we received a direction with no distance
+                good_directions = False
             current_direction = ''
 
     return good_directions
