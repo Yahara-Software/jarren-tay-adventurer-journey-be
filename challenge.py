@@ -48,7 +48,29 @@ def interpret_directions(direction_string: str) -> list:
                             F = forward, B = backward, R = right, L = left
     Returns: A list of Vectors
     """
-    return []
+    good_directions: bool = True
+    directions_list: list = []
+    current_direction: str = ''
+    vector_magnitude: int = 0
+    for next_char in direction_string:
+        if next_char.isnumeric():
+            current_direction = current_direction + next_char
+        else:
+            vector_magnitude = int(current_direction)
+            match next_char:
+                case 'F':
+                    directions_list.append(Vector(0, vector_magnitude))
+                case 'B':
+                    directions_list.append(Vector(0, vector_magnitude * -1))
+                case 'R':
+                    directions_list.append(Vector(vector_magnitude, 0))
+                case 'L':
+                    directions_list.append(Vector(vector_magnitude * -1, 0))
+                case _  :
+                    good_directions = False
+            current_direction = ''
+    
+    return directions_list
 
 def calculate_final_coordinate(vector_list: list) -> Vector:
     """
