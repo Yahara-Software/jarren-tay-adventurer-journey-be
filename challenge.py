@@ -51,12 +51,15 @@ def get_directions_from_file() -> str:
     Get the string of directions from file.
     Returns: String of directions, alternating n num of numeric chars and 1 letter
     """
-    directions: str = ''
-    with open(DIRECTION_FILE, "r") as raw_direction_file:
-        raw_direction_string: str = raw_direction_file.read()
-        begin_directions_index = raw_direction_string.find("`") + 1
-        end_directions_index = raw_direction_string.find("`", begin_directions_index)
-        directions = raw_direction_string[begin_directions_index:end_directions_index]
+    directions: str
+    try:
+        with open(DIRECTION_FILE, "r") as raw_direction_file:
+            raw_direction_string: str = raw_direction_file.read()
+            begin_directions_index = raw_direction_string.find("`") + 1
+            end_directions_index = raw_direction_string.find("`", begin_directions_index)
+            directions = raw_direction_string[begin_directions_index:end_directions_index]
+    except:
+        directions = ''
     return directions
 
 def interpret_directions(direction_string: str, vector_list: list) -> bool:
@@ -129,7 +132,7 @@ def main() -> int:
     directions: str = get_directions()
     if directions == '':
         return_status = Codes.NO_DIRECTIONS
-        print("Could not read from file or test case.")
+        print("Could not read from file.")
         return return_status
 
     vector_list: list = []
