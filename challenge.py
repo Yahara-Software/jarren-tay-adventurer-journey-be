@@ -29,6 +29,7 @@ class Vector(NamedTuple):
     def magnitude(self):
         """
         Determines the magnitude of the vector.
+        Returns: The magnitude as a float
         """
         return math.sqrt((self.x ** 2) + (self.y ** 2))
 
@@ -71,7 +72,8 @@ def interpret_directions(direction_string: str, vector_list: list) -> bool:
     Parameters:
         direction_string:   Alternating n num of numeric chars and 1 letter
                             F = forward, B = backward, R = right, L = left
-    Returns: 
+    Returns: A bool, true if we were able to interpret the directions with no errors, false otherwise.
+
     """
     good_directions: bool = True
     current_direction: str = ''
